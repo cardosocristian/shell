@@ -27,7 +27,7 @@ read opcao
                          echo "Inserindo IP na blacklist"
                         /sbin/pfctl -t blacklist -T add $IP
                         
-                        #Caso o IP ja esteja com estado criado no kernel, mata os estado para ja dropar a conexao
+                        #Caso o IP ja esteja com estado criado no kernel, mata os estados para ja dropar a conexao
                         /sbin/pfctl -k $IP 2>&-
 
                 fi

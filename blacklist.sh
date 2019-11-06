@@ -13,17 +13,18 @@ read opcao
                 1) echo "Digite o IPv4 ou IPv6 que deseja inserir na blacklist"
                 read IP
                 
-                #Lista IP's da tabela e joga em um arquivo
-                /sbin/pfctl -t blacklist -T show > /root/blacklist.txt
+                #Lista IP's da tabela e joga em um arquivo, já que em caso de reiniciar nao mantem os IP's bloqueados na memória
+                #assim recarregamos os IP's na lista ao reiniciar o roteador
+                $pfctl -t blacklist -T show > /root/blacklist.txt
                 
-                #Lista IP's da tabela e joga em um arquivo
-                grep $IP /root/blacklist.txt
-
+                #Verifica se o IP não está na lista
+                /sbin/pfctl -t blacklist -T show | grep "$IP"
+                
                 if [ $? == 0 ]; then
                         echo "IP já está na blacklist"
 
                 else
-                         echo "Inserindo $IP na blacklist"
+                         echo "Inserindo IP na blacklist"
                         /sbin/pfctl -t blacklist -T add $IP
                         
                         #Caso o IP ja esteja com estado criado no kernel, mata os estado para ja dropar a conexao
@@ -35,12 +36,10 @@ read opcao
                 2) echo "Digite o IPv4 ou IPv6 que deseja remover da blacklist"
                 read IP
                 
-                #Lista IP's da tabela e joga em um arquivo
-                /sbin/pfctl -t blacklist -T show > /root/blacklist.txt
+                #Valida se o IP ja esta na blacklist
+                $pfctl -t blacklist -T show | grep "$IP"
                 
-                #Lista IP's da tabela e joga em um arquivo
-                grep $IP /root/blacklist.txt
-
+          
                 if [ $? == 0 ]; then
                         echo "Removendo o $IP"
                         /sbin/pfctl -t blacklist -T delete $IP

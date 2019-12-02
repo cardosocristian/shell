@@ -2,6 +2,9 @@
 
 Scripts em Shell para uso em serviços de rede.
 
+# Backup-sw.sh
+
+Arquivo para backup de switches que tenham liberado o acesso via SSH.
 
 
 # Blacklist.sh

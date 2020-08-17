@@ -4,10 +4,8 @@
 pfctl="/sbin/pfctl"
 
 echo "INSERCAO OU REMOCAO DE BLACKLIST DE IP's"
-echo " "
 echo "Você deseja inserir um IP na blacklist ou remover?"
-echo "Digite 1 para inserir e 2 para remover"
-read opcao
+read -p "| Digite 1 para inserir| Digite 2 para remocao | 3 para exibicao da lista de IP's | Opcao: " opcao
 
         case $opcao in
                 1) echo "Digite o IPv4 ou IPv6 que deseja inserir na blacklist"

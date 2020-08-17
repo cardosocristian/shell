@@ -17,14 +17,15 @@ read opcao
                 #assim recarregamos os IP's na lista ao reiniciar o roteador
                 $pfctl -t blacklist -T show > /root/blacklist.txt
                 
-                #Verifica se o IP não está na lista
-                /sbin/pfctl -t blacklist -T show | grep "$IP"
                 
-                if [ $? == 0 ]; then
+                #Verifica se o IP não está na lista
+                if /sbin/pfctl -t blacklist -T show | grep "$IP"; then
+
                         echo "IP já está na blacklist"
 
                 else
-                         echo "Inserindo IP na blacklist"
+
+                        echo "Inserindo IP na blacklist"
                         /sbin/pfctl -t blacklist -T add $IP
                         
                         #Caso o IP ja esteja com estado criado no kernel, mata os estados para ja dropar a conexao
@@ -35,16 +36,16 @@ read opcao
 
                 2) echo "Digite o IPv4 ou IPv6 que deseja remover da blacklist"
                 read IP
-                
-                #Valida se o IP ja esta na blacklist
-                $pfctl -t blacklist -T show | grep "$IP"
-                
-          
-                if [ $? == 0 ]; then
+
+          		#Verifica se o IP esta na lista
+                if $pfctl -t blacklist -T show | grep "$IP"; then
+
                         echo "Removendo o $IP"
                         /sbin/pfctl -t blacklist -T delete $IP
                 else
+
                         echo "$IP não esta na blacklist"
+
                 fi
 
                 ;;
@@ -58,4 +59,3 @@ read opcao
         echo "Voltando ao menu anterior"
 
 esac
-~

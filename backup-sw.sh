@@ -10,7 +10,11 @@
 # Necessario ter instalado no servidor o comando sshpass para funcionamento do script
 
 
+##Podemos fazer o array assim:
+#Array de IP's
+declare -a SW=("10.10.10.10", "10.10.10.20")
 
+#ou como está abaixo
 SW[0]="192.168.10.1"
 SW[1]="192.168.10.2"
 SW[2]="192.168.10.3"
